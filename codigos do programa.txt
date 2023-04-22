@@ -1,0 +1,56 @@
+import pickle
+
+class Task:
+    def __init__(self, description, completed=False):
+        self.description = description
+        self.completed = completed
+
+    def __str__(self):
+        status = "[X]" if self.completed else "[ ]"
+        return f"{status} {self.description}"
+
+class TodoList:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, description):
+        task = Task(description)
+        self.tasks.append(task)
+
+    def mark_as_completed(self, index):
+        task = self.tasks[index]
+        task.completed = True
+
+    def view_tasks(self):
+        if not self.tasks:
+            print("Nenhuma tarefa cadastrada.")
+        else:
+            print("Lista de Tarefas:")
+            for i, task in enumerate(self.tasks):
+                print(f"{i + 1}. {task}")
+
+def main():
+    todo_list = TodoList()
+    while True:
+        print("======= To-Do List =======")
+        print("1. Adicionar tarefa")
+        print("2. Marcar como concluída")
+        print("3. Ver tarefas pendentes")
+        print("4. Sair")
+        choice = input("Escolha uma opção: ")
+        if choice == "1":
+            description = input("Digite a descrição da tarefa: ")
+            todo_list.add_task(description)
+        elif choice == "2":
+            index = int(input("Digite o número da tarefa concluída: ")) - 1
+            todo_list.mark_as_completed(index)
+        elif choice == "3":
+            todo_list.view_tasks()
+        elif choice == "4":
+            print("Saindo...")
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
+
+if __name__ == "__main__":
+    main()
